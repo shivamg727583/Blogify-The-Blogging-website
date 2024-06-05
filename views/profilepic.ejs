@@ -1,0 +1,19 @@
+<%- include(`./partials/head`) %>
+
+<div class="w-full flex items-center relative h-screen">
+    <div class="lg:w-2/6 md:w-1/2 bg-gray-100 rounded-lg p-8 md:ml-auto w-full absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 md:mt-0 shadow bg-gray-200">
+        <form action="/profile-pic/<%= user._id %>" method="post" enctype="multipart/form-data">
+            <h2 class="text-gray-900 text-lg font-medium text-center title-font mb-5">Update Your Profile</h2>
+            
+            
+            <div class="relative mb-4">
+                <label for="profilepic" class="leading-7 text-sm text-gray-600">Profile Picture</label>
+                <input type="file" id="profilepic" name="profilepic" class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out">
+            </div>
+            
+            <button type="submit" class="text-white bg-orange-500 border-0 py-2 px-8 focus:outline-none hover:bg-orange-700 rounded text-lg w-full mt-4">Update</button>
+        </form>
+    </div>
+</div>
+
+<%- include(`./partials/foot`) %>
