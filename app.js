@@ -15,7 +15,7 @@ const port = process.env.PORT || 3000;
 
 
 
-    mongoose.connect(process.env.MONGO_URI, {
+    mongoose.connect("mongodb+srv://shivamg727583:shivamg727583@@cluster0.mg6wbk0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       serverSelectionTimeoutMS: 30000, // 30 seconds
