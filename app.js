@@ -11,21 +11,19 @@ const blogRouter = require("./routes/blog-router");
 const { checkForAuthenticationCookie } = require('./middleware/authentication');
 
 const port = process.env.PORT || 3000;
+
 // Connect to MongoDB
-
-
-
-    mongoose.connect("mongodb+srv://shivamg727583:shivamg727583@@cluster0.mg6wbk0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 30000, // 30 seconds
-    })
-    .then(() => {
-      console.log("Connected to database");
-    })
-    .catch((err) => {
-      console.error("Database connection error:", err);
-    });
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  serverSelectionTimeoutMS: 30000 // 30 seconds
+})
+.then(() => {
+  console.log("Connected to database");
+})
+.catch((err) => {
+  console.error("Database connection error:", err);
+});
 
 // Set view engine to EJS
 app.set('view engine', 'ejs');
@@ -39,29 +37,23 @@ app.use(checkForAuthenticationCookie("token"));
 
 // Routes
 app.use('/', userRouter);
-app.use("/",blogRouter)
+app.use("/", blogRouter);
 
 // Home route
 app.get('/', async (req, res) => {
-    try {
-      // Fetch all blogs and populate the createdBy field with user details
-      const allBlogs = await blogModel.find().populate('createdBy');
-  
-      // Log the blogs to see the structure
-      
-    //   allBlogs.forEach(blog => {
-    //     console.log(blog.createdBy);
-    //   });
-  
-      // Render the index template with the blogs and user data
-      res.render('index', { user: req.user, blogs: allBlogs });
-    } catch (error) {
-      console.error('Error fetching blogs:', error);
-      res.status(500).send("Internal Server Error");
-    }
-  });
+  try {
+    // Fetch all blogs and populate the createdBy field with user details
+    const allBlogs = await blogModel.find().populate('createdBy');
+
+    // Render the index template with the blogs and user data
+    res.render('index', { user: req.user, blogs: allBlogs });
+  } catch (error) {
+    console.error('Error fetching blogs:', error);
+    res.status(500).send("Internal Server Error");
+  }
+});
 
 // Start the server
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+  console.log(`Server is running on port ${port}`);
 });
